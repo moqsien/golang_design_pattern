@@ -1,11 +1,11 @@
 package main
 
 import (
-	"design_pattern/abstract_factory"
-	"design_pattern/builder"
-	"design_pattern/factory"
-	"design_pattern/single"
 	"fmt"
+	"golang_design_pattern/abstract_factory"
+	"golang_design_pattern/builder"
+	"golang_design_pattern/factory"
+	"golang_design_pattern/single"
 )
 
 func singleTest() {
