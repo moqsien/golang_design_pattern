@@ -5,6 +5,7 @@ import (
 	"golang_design_pattern/abstract_factory"
 	"golang_design_pattern/builder"
 	"golang_design_pattern/factory"
+	"golang_design_pattern/prototype"
 	"golang_design_pattern/single"
 )
 
@@ -47,9 +48,20 @@ func abstractFactoryTest() {
 	sportMotor.GetVehicle()
 }
 
+func prototypeTest() {
+	shirtCache := &prototype.ShirtCache{}
+	item1, _ := shirtCache.GetClone(prototype.White)
+	info1 := item1.GetInfo()
+	fmt.Printf(info1)
+	item2, _ := shirtCache.GetClone(prototype.Black)
+	info2 := item2.GetInfo()
+	fmt.Printf(info2)
+}
+
 func main() {
 	singleTest()
 	builderTest()
 	factoryTest()
 	abstractFactoryTest()
+	prototypeTest()
 }
