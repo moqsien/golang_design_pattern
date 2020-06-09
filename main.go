@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"golang_design_pattern/abstract_factory"
 	"golang_design_pattern/builder"
+	"golang_design_pattern/composite"
 	"golang_design_pattern/factory"
 	"golang_design_pattern/prototype"
 	"golang_design_pattern/single"
@@ -58,10 +59,20 @@ func prototypeTest() {
 	fmt.Printf(info2)
 }
 
+func compositeTest() {
+	compositeSwimmer := &composite.CompositeSwimmer{
+		&composite.SwimmerImp1{},
+		&composite.Athlete{},
+	}
+	compositeSwimmer.Swim()
+	compositeSwimmer.Train()
+}
+
 func main() {
 	singleTest()
 	builderTest()
 	factoryTest()
 	abstractFactoryTest()
 	prototypeTest()
+	compositeTest()
 }
