@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"golang_design_pattern/abstract_factory"
+	"golang_design_pattern/adapter"
 	"golang_design_pattern/builder"
 	"golang_design_pattern/composite"
 	"golang_design_pattern/factory"
@@ -68,6 +69,15 @@ func compositeTest() {
 	compositeSwimmer.Train()
 }
 
+func adapterTest() {
+	newPrinter := &adapter.PrinterAdapter{nil, ">>New Printer<<"}
+	newRes := newPrinter.PrintSorted()
+	fmt.Println(newRes)
+	oldPrinter := &adapter.PrinterAdapter{new(adapter.LegacyPrinterImp), ">>Old Printer<<"}
+	oldRes := oldPrinter.PrintSorted()
+	fmt.Println(oldRes)
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -75,4 +85,5 @@ func main() {
 	abstractFactoryTest()
 	prototypeTest()
 	compositeTest()
+	adapterTest()
 }
