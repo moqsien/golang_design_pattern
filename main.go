@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"golang_design_pattern/abstract_factory"
 	"golang_design_pattern/adapter"
+	"golang_design_pattern/bridge"
 	"golang_design_pattern/builder"
 	"golang_design_pattern/composite"
 	"golang_design_pattern/factory"
@@ -78,6 +79,24 @@ func adapterTest() {
 	fmt.Println(oldRes)
 }
 
+type writer struct {
+	Msg string
+}
+
+func (w *writer) Write(p []byte) (n int, err error) {
+	fmt.Println(w.Msg)
+	return
+}
+
+func bridgeTest() {
+	normalPrinter := &bridge.NormalPrinter{"Normal", new(bridge.PrinterImpl1)}
+	normalPrinter.Print()
+	w := &writer{"Writer"}
+	printer := &bridge.PrinterImpl2{w}
+	packetPrinter := &bridge.PacketPrinter{"Packet", printer}
+	packetPrinter.Print()
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -86,4 +105,5 @@ func main() {
 	prototypeTest()
 	compositeTest()
 	adapterTest()
+	bridgeTest()
 }

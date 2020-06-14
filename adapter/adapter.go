@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// 适配器模式
 type LegacyPrinter interface {
 	Print(s string) string
 }
