@@ -9,7 +9,9 @@ import (
 	"golang_design_pattern/composite"
 	"golang_design_pattern/factory"
 	"golang_design_pattern/prototype"
+	"golang_design_pattern/proxy"
 	"golang_design_pattern/single"
+	"math/rand"
 )
 
 func singleTest() {
@@ -97,6 +99,25 @@ func bridgeTest() {
 	packetPrinter.Print()
 }
 
+func proxyTest() {
+	someDatabase := proxy.UserList{}
+	rand.Seed(2342342)
+	for i := 0; i < 200; i++ {
+		n := rand.Int31()
+		someDatabase = append(someDatabase, proxy.User{ID: n})
+	}
+	myProxy := proxy.UserListProxy{
+		SomeDatabase:  someDatabase,
+		StackCache:    proxy.UserList{},
+		StackCapacity: 3,
+	}
+	user, _ := myProxy.FindUser(1)
+	fmt.Printf("user: %s\n", user)
+	user2, _ := myProxy.FindUser(1)
+	fmt.Printf("user2: %s\n", user2)
+	fmt.Printf("cache: %s\n", myProxy.StackCache)
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -106,4 +127,5 @@ func main() {
 	compositeTest()
 	adapterTest()
 	bridgeTest()
+	proxyTest()
 }
