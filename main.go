@@ -7,6 +7,7 @@ import (
 	"golang_design_pattern/bridge"
 	"golang_design_pattern/builder"
 	"golang_design_pattern/composite"
+	"golang_design_pattern/decorator"
 	"golang_design_pattern/factory"
 	"golang_design_pattern/prototype"
 	"golang_design_pattern/proxy"
@@ -118,6 +119,17 @@ func proxyTest() {
 	fmt.Printf("cache: %s\n", myProxy.StackCache)
 }
 
+func decoratorTest() {
+	pizza := &decorator.Onion{&decorator.Meat{&decorator.PizzaDecorator{}}}
+	pizzaResult, err := pizza.AddIngredient()
+	if err == nil {
+		fmt.Println(pizzaResult)
+	} else {
+		fmt.Println(err)
+	}
+
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -128,4 +140,5 @@ func main() {
 	adapterTest()
 	bridgeTest()
 	proxyTest()
+	decoratorTest()
 }
