@@ -6,6 +6,8 @@ import (
 	"golang_design_pattern/adapter"
 	"golang_design_pattern/bridge"
 	"golang_design_pattern/builder"
+	"golang_design_pattern/chain"
+	"golang_design_pattern/command"
 	"golang_design_pattern/composite"
 	"golang_design_pattern/decorator"
 	"golang_design_pattern/factory"
@@ -145,6 +147,23 @@ func strategyTest() {
 	strategy.Use("image")
 }
 
+func chainTest() {
+	logger2 := chain.SecondLogger{nil}
+	logger1 := chain.FirstLogger{
+		NextChain: &logger2,
+	}
+	logger1.Next("hello")
+}
+
+func commandTest() {
+	queue := command.CommandQueue{}
+	queue.AddCommand(command.CreateCommand("1st"))
+	queue.AddCommand(command.CreateCommand("2nd"))
+	queue.AddCommand(command.CreateCommand("3rd"))
+	queue.AddCommand(command.CreateCommand("4th"))
+	queue.AddCommand(command.CreateCommand("5th"))
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -158,4 +177,6 @@ func main() {
 	decoratorTest()
 	flyweightTest()
 	strategyTest()
+	chainTest()
+	commandTest()
 }
