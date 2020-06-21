@@ -9,9 +9,11 @@ import (
 	"golang_design_pattern/composite"
 	"golang_design_pattern/decorator"
 	"golang_design_pattern/factory"
+	"golang_design_pattern/flyweight"
 	"golang_design_pattern/prototype"
 	"golang_design_pattern/proxy"
 	"golang_design_pattern/single"
+	"golang_design_pattern/strategy"
 	"math/rand"
 )
 
@@ -130,6 +132,19 @@ func decoratorTest() {
 
 }
 
+func flyweightTest() {
+	flFactory := flyweight.NewTeamFactory()
+	team1 := flFactory.GetTeam(1)
+	fmt.Printf("team1: %s\n", team1)
+	team2 := flFactory.GetTeam(3)
+	fmt.Printf("team2: %s\n", team2)
+}
+
+func strategyTest() {
+	strategy.Use("console")
+	strategy.Use("image")
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -141,4 +156,6 @@ func main() {
 	bridgeTest()
 	proxyTest()
 	decoratorTest()
+	flyweightTest()
+	strategyTest()
 }
