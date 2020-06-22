@@ -16,6 +16,7 @@ import (
 	"golang_design_pattern/proxy"
 	"golang_design_pattern/single"
 	"golang_design_pattern/strategy"
+	"golang_design_pattern/templ"
 	"math/rand"
 )
 
@@ -164,6 +165,21 @@ func commandTest() {
 	queue.AddCommand(command.CreateCommand("5th"))
 }
 
+type retriever struct {
+	Msg string
+}
+
+func (r *retriever) Message() string {
+	return r.Msg
+}
+
+func templateTest() {
+	r := &retriever{"test"}
+	t := &templ.Template{}
+	res := t.ExecuteAlgorithm(r)
+	fmt.Printf("result: %s\n", res)
+}
+
 func main() {
 	singleTest()
 	builderTest()
@@ -179,4 +195,5 @@ func main() {
 	strategyTest()
 	chainTest()
 	commandTest()
+	templateTest()
 }
