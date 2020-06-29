@@ -11,7 +11,7 @@ type State struct {
 type memento struct {
 	state State
 }
-
+ 
 type originator struct {
 	state State
 }

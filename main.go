@@ -37,7 +37,7 @@ func builderTest() {
 	director.SetBuilder(carBuilder)
 	director.Constructor()
 	car := carBuilder.GetVehicle()
-	fmt.Printf("builder, car: %s", car)
+	fmt.Printf("builder, car: %v", car)
 	fmt.Printf("\n")
 }
 
@@ -71,18 +71,24 @@ func prototypeTest() {
 
 func compositeTest() {
 	compositeSwimmer := &composite.CompositeSwimmer{
-		&composite.SwimmerImp1{},
-		&composite.Athlete{},
+		Swimmer: &composite.SwimmerImp1{},
+		Trainer: &composite.Athlete{},
 	}
 	compositeSwimmer.Swim()
 	compositeSwimmer.Train()
 }
 
 func adapterTest() {
-	newPrinter := &adapter.PrinterAdapter{nil, ">>New Printer<<"}
+	newPrinter := &adapter.PrinterAdapter{
+		OldPrinter: nil,
+		Msg:        ">>New Printer<<",
+	}
 	newRes := newPrinter.PrintSorted()
 	fmt.Println(newRes)
-	oldPrinter := &adapter.PrinterAdapter{new(adapter.LegacyPrinterImp), ">>Old Printer<<"}
+	oldPrinter := &adapter.PrinterAdapter{
+		OldPrinter: new(adapter.LegacyPrinterImp),
+		Msg:        ">>Old Printer<<",
+	}
 	oldRes := oldPrinter.PrintSorted()
 	fmt.Println(oldRes)
 }
@@ -97,11 +103,19 @@ func (w *writer) Write(p []byte) (n int, err error) {
 }
 
 func bridgeTest() {
-	normalPrinter := &bridge.NormalPrinter{"Normal", new(bridge.PrinterImpl1)}
+	normalPrinter := &bridge.NormalPrinter{
+		Msg:     "Normal",
+		Printer: new(bridge.PrinterImpl1),
+	}
 	normalPrinter.Print()
 	w := &writer{"Writer"}
-	printer := &bridge.PrinterImpl2{w}
-	packetPrinter := &bridge.PacketPrinter{"Packet", printer}
+	printer := &bridge.PrinterImpl2{
+		Writer: w,
+	}
+	packetPrinter := &bridge.PacketPrinter{
+		Msg:     "Packet",
+		Printer: printer,
+	}
 	packetPrinter.Print()
 }
 
@@ -118,14 +132,18 @@ func proxyTest() {
 		StackCapacity: 3,
 	}
 	user, _ := myProxy.FindUser(1)
-	fmt.Printf("user: %s\n", user)
+	fmt.Printf("user: %v\n", user)
 	user2, _ := myProxy.FindUser(1)
-	fmt.Printf("user2: %s\n", user2)
-	fmt.Printf("cache: %s\n", myProxy.StackCache)
+	fmt.Printf("user2: %v\n", user2)
+	fmt.Printf("cache: %v\n", myProxy.StackCache)
 }
 
 func decoratorTest() {
-	pizza := &decorator.Onion{&decorator.Meat{&decorator.PizzaDecorator{}}}
+	pizza := &decorator.Onion{
+		Ingredient: &decorator.Meat{
+			Ingredient: &decorator.PizzaDecorator{},
+		},
+	}
 	pizzaResult, err := pizza.AddIngredient()
 	if err == nil {
 		fmt.Println(pizzaResult)
@@ -138,9 +156,9 @@ func decoratorTest() {
 func flyweightTest() {
 	flFactory := flyweight.NewTeamFactory()
 	team1 := flFactory.GetTeam(1)
-	fmt.Printf("team1: %s\n", team1)
+	fmt.Printf("team1: %v\n", team1)
 	team2 := flFactory.GetTeam(3)
-	fmt.Printf("team2: %s\n", team2)
+	fmt.Printf("team2: %v\n", team2)
 }
 
 func strategyTest() {
@@ -149,7 +167,9 @@ func strategyTest() {
 }
 
 func chainTest() {
-	logger2 := chain.SecondLogger{nil}
+	logger2 := chain.SecondLogger{
+		NextChain: nil,
+	}
 	logger1 := chain.FirstLogger{
 		NextChain: &logger2,
 	}

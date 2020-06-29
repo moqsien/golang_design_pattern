@@ -2,3 +2,4 @@
 *.mod
 *.jpg
 *.debug
+.vscode
